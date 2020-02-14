@@ -23,6 +23,7 @@ class LoginPage extends React.Component {
   }
 
   componentDidMount() {
+    console.log('Mounted');
     this.setState({ isLoggedIn: isAuthenticated() });
   }
 
