@@ -32,7 +32,6 @@ class LoginPage extends React.Component {
 
     this.firebase.signInWithEmail(this.state.email, this.state.password, (res) => {
       if (!res.success) {
-        // TODO(dpowers): better error handling
         console.error(res.err);
       } else {
         signToken(this.state.email, (err) => {

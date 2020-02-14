@@ -14,6 +14,7 @@ ReactDOM.render(
       <Switch>
         <Route exact path="/" component={LoginPage} />
         <ProtectedRoute exact path="/iloveyou" component={SlideshowPage} />
+        <Route component={LoginPage} />
       </Switch>
     </BrowserRouter>
   </FirebaseContext.Provider>,
