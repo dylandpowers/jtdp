@@ -24,3 +24,4 @@ jobs:
         deploy_key: ${{ secrets.DEPLOY_SECRET }}
         publish_dir: ./build 
         REACT_APP_FIREBASE_API_KEY: ${{ secrets.REACT_APP_FIREBASE_API_KEY }}
+        REACT_APP_JWT_SECRET: ${{ secrets.REACT_APP_JWT_SECRET }}
