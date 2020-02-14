@@ -11,8 +11,6 @@ const firebaseConfig = {
   appId: "1:786415873557:web:defecb2e86a857bf8b281c"
 };
 
-const PICS_FOLDER = 'couple-pics';
-
 class Firebase {
   constructor() {
     firebase.initializeApp(firebaseConfig);
@@ -30,14 +28,24 @@ class Firebase {
   signInWithEmail = (email, password, callback) => {
     this.auth.signInWithEmailAndPassword(email, password)
       .then(() => callback({ success: true }))
-      .catch(err => callback({ success: false, err: err }));
+      .catch((err) => callback({ success: false, err: err }));
   };
 
-  getPhotoUrl = (callback) => {
-    this.storage.ref(`${PICS_FOLDER}/pic1.jpg`)
-      .getDownloadURL()
-      .then(url => callback({ success: true, url: url }))
-      .catch(err => callback({ success: false, err: err }));
+  fetchAllImageUrls = (callback) => {
+    this.storage.ref()
+      .listAll()
+      .then((res) => {
+        Promise.all(res.prefixes.map((prefix) => {
+          return new Promise((resolve, reject) => {
+            prefix.listAll().then((prefixRes) => {
+              Promise.all(prefixRes.items.map((item) => item.getDownloadURL()))
+                .then((urls) => resolve({ name: prefix.name, urls: urls }))
+                .catch((err) => reject(err));
+            }).catch((err) => reject(err));
+          });
+        })).then((data) => callback({ success: true, data: data }))
+        .catch((err) => callback({ success: false, err: err }))
+      }).catch((err) => callback({ success: false, err: err }));
   }
 }
 
