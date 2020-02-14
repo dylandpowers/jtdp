@@ -5,9 +5,6 @@ on:
     branches:
       - master
 
-env:
-  REACT_APP_FIREBASE_API_KEY: ${{ secrets.REACT_APP_FIREBASE_API_KEY }}
-
 jobs:
   deploy:
     runs-on: ubuntu-latest
@@ -26,3 +23,4 @@ jobs:
       with:
         deploy_key: ${{ secrets.DEPLOY_SECRET }}
         publish_dir: ./build 
+        REACT_APP_FIREBASE_API_KEY: ${{ secrets.REACT_APP_FIREBASE_API_KEY }}
