@@ -21,6 +21,7 @@ class CountdownDisplay extends React.Component {
           renderer={props => {
           return <div className={styles.text}>{props.days}d {props.hours}h {props.minutes}m {props.seconds}s</div>
           }}
+          onComplete={() => <div className={styles.text}>We're together!</div>}
         >
         </Countdown>
       </div>

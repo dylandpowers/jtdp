@@ -79,10 +79,6 @@ class SlideshowPage extends React.Component {
       indicators: false,
     }
 
-    const date = new Date();
-    date.setMonth(2, 22);
-    date.setHours(15, 42);
-
     return (
       <div className={styles.container}>
         <div className={styles.buttonContainer}>
