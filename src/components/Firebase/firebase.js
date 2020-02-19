@@ -22,8 +22,6 @@ class Firebase {
    * @param {string} email
    * @param {string} password
    * @param {function} callback
-   * 
-   * JASMINE PASSWORD: i am the prettiest girl
    */
   signInWithEmail = (email, password, callback) => {
     this.auth.signInWithEmailAndPassword(email, password)

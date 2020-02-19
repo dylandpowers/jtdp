@@ -1,0 +1,22 @@
+.container {
+  background-color: #ccccff;
+  display: flex;
+  flex-direction: column;
+  position: absolute;
+  top: 50vh;
+  left: 6vw;
+}
+
+.text {
+  color: #ffffff;
+  font-size: 40px;
+  text-align: center;
+  opacity: 0.8;
+}
+
+.smallText {
+  color: #ffffff;
+  text-align: center;
+  opacity: 0.8;
+  font-size: 18px;
+}

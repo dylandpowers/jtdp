@@ -31,6 +31,11 @@
   cursor: pointer;
 }
 
+.content {
+  display: flex;
+  flex-direction: row;
+}
+
 .buttonSelected {
   margin: auto;
   padding: 5px;

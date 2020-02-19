@@ -1,9 +1,11 @@
 import React from 'react';
 import { Redirect, withRouter } from 'react-router-dom';
 import { Fade } from 'react-slideshow-image';
+import Countdown from 'react-countdown';
 
 import styles from './styles.module.css';
 import { withFirebase } from '../../components/Firebase/firebase';
+import CountdownDisplay from '../../components/CountdownDisplay';
 
 const DYLAN_IMAGE_MODE = 'dylan-pics';
 const COUPLE_IMAGE_MODE = 'couple-pics';
@@ -77,6 +79,10 @@ class SlideshowPage extends React.Component {
       indicators: false,
     }
 
+    const date = new Date();
+    date.setMonth(2, 22);
+    date.setHours(15, 42);
+
     return (
       <div className={styles.container}>
         <div className={styles.buttonContainer}>
@@ -108,6 +114,7 @@ class SlideshowPage extends React.Component {
             this.state.imageUrls.map((url, index) => <img key={index} src={url} className={styles.image} />)
           }
         </Fade>
+        <CountdownDisplay />
       </div>
     );
   }
