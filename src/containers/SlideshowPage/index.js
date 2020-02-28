@@ -2,6 +2,8 @@ import React from 'react';
 import { Redirect, withRouter } from 'react-router-dom';
 import { Fade } from 'react-slideshow-image';
 import Countdown from 'react-countdown';
+import { useWindowSize } from '@react-hook/window-size';
+import Confetti from 'react-confetti';
 
 import styles from './styles.module.css';
 import { withFirebase } from '../../components/Firebase/firebase';
@@ -81,6 +83,7 @@ class SlideshowPage extends React.Component {
 
     return (
       <div className={styles.container}>
+      <Confetti width={window.innerWidth} height={window.innerHeight} recycle={false} />
         <div className={styles.buttonContainer}>
           <div 
             className={this.state.imageMode === COUPLE_IMAGE_MODE ? styles.buttonSelected : styles.button}
