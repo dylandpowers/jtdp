@@ -4,6 +4,7 @@ import { Fade } from 'react-slideshow-image';
 import Countdown from 'react-countdown';
 import { useWindowSize } from '@react-hook/window-size';
 import Confetti from 'react-confetti';
+import classNames from 'classnames';
 
 import styles from './styles.module.css';
 import { withFirebase } from '../../components/Firebase/firebase';
@@ -90,7 +91,7 @@ class SlideshowPage extends React.Component {
 
     const confettiElements = [];
     for (let i = 0; i < this.state.confettiNumber; i += 1) {
-      confettiElements.push(<Confetti key={i} width={window.innerWidth} height={window.innerHeight} recycle={false} />);
+      confettiElements.push(<Confetti key={i} recycle={false} />);
     }
 
     return (
@@ -119,20 +120,25 @@ class SlideshowPage extends React.Component {
             Dylan
           </div>
         </div>
-
-        <Fade {...fadeProperties} className={styles.gallery}>
-          {
-            this.state.imageUrls.map((url, index) => <img key={index} src={url} className={styles.image} />)
-          }
-        </Fade>
-        <div
-          className={styles.button}
-          role="button"
-          onClick={(e) => this.toggleConfetti()}
-        >
-          I love you!
+        <div className={styles.mainContentContainer}>
+          <div className={classNames(styles.paneContainer, 'left')}>
+            <CountdownDisplay />
+          </div>
+          <Fade {...fadeProperties} className={styles.gallery}>
+            {
+              this.state.imageUrls.map((url, index) => <img key={index} src={url} className={styles.image} />)
+            }
+          </Fade>
+          <div className={classNames(styles.paneContainer, 'right')}>
+            <div
+              className={styles.button}
+              role="button"
+              onClick={(e) => this.toggleConfetti()}
+            >
+              I love you!
+            </div>
+          </div>
         </div>
-        <CountdownDisplay />
       </div>
     );
   }
