@@ -23,10 +23,10 @@ class CountdownDisplay extends React.Component {
     return (
       <div className={styles.container}>
         <u className={styles.smallText}>
-          Countdown
+          Countdown to 6 month anniversary
         </u>
         <Countdown
-          date="2020-02-22T15:52:00"
+          date="2020-04-06T05:00:00+00:00"
           renderer={renderer}
         >
         </Countdown>

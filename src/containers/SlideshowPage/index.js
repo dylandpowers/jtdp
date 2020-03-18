@@ -19,7 +19,8 @@ class SlideshowPage extends React.Component {
 
     this.state = {
       imageMode: '',
-      imageUrls: []
+      imageUrls: [],
+      confettiNumber: 1
     };
 
     this.allImages = {};
@@ -27,6 +28,7 @@ class SlideshowPage extends React.Component {
     this.firebase = props.firebase;
     this.fetchAllImageUrls = this.fetchAllImageUrls.bind(this);
     this.updateImageUrlsAndImageMode = this.updateImageUrlsAndImageMode.bind(this);
+    this.toggleConfetti = this.toggleConfetti.bind(this);
   }
 
   componentDidMount() {
@@ -64,6 +66,11 @@ class SlideshowPage extends React.Component {
     });
   };
 
+  toggleConfetti = () => {
+    this.firebase.incrementConfettiCount();
+    this.setState({ confettiNumber: this.state.confettiNumber + 1 });
+  };
+
   _shuffleArray = (array) => {
     for (let i = array.length - 1; i > 0; i--) {
       const j = Math.floor(Math.random() * (i + 1));
@@ -81,9 +88,14 @@ class SlideshowPage extends React.Component {
       indicators: false,
     }
 
+    const confettiElements = [];
+    for (let i = 0; i < this.state.confettiNumber; i += 1) {
+      confettiElements.push(<Confetti key={i} width={window.innerWidth} height={window.innerHeight} recycle={false} />);
+    }
+
     return (
       <div className={styles.container}>
-      <Confetti width={window.innerWidth} height={window.innerHeight} recycle={false} />
+        {confettiElements}
         <div className={styles.buttonContainer}>
           <div 
             className={this.state.imageMode === COUPLE_IMAGE_MODE ? styles.buttonSelected : styles.button}
@@ -113,6 +125,13 @@ class SlideshowPage extends React.Component {
             this.state.imageUrls.map((url, index) => <img key={index} src={url} className={styles.image} />)
           }
         </Fade>
+        <div
+          className={styles.button}
+          role="button"
+          onClick={(e) => this.toggleConfetti()}
+        >
+          I love you!
+        </div>
         <CountdownDisplay />
       </div>
     );

@@ -45,6 +45,23 @@ class Firebase {
         .catch((err) => callback({ success: false, err: err }))
       }).catch((err) => callback({ success: false, err: err }));
   }
+
+  incrementConfettiCount = () => {
+    const user = this.auth.currentUser;
+    if (user) {
+      var childName;
+      // this is hacky buuuut whatever
+      if (user.email.startsWith('j')) {
+        childName = 'Jasmine';
+      } else {
+        childName = 'Dylan'
+      }
+      firebase.database()
+      .ref('clicks')
+      .child(childName)
+      .transaction(currentNum => (currentNum || 0) + 1);
+    }
+  };
 }
 
 const FirebaseContext = React.createContext(null);
