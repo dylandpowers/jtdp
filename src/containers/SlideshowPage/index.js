@@ -89,9 +89,48 @@ class SlideshowPage extends React.Component {
       indicators: false,
     }
 
+
+
+    const drawHeart = (context, x, y, width, height) => {
+      context.beginPath();
+      var topCurveHeight = height * 0.3;
+      context.moveTo(x, y + topCurveHeight);
+      // top left curve
+      context.bezierCurveTo(
+        x, y, 
+        x - width / 2, y, 
+        x - width / 2, y + topCurveHeight
+      );
+                
+      // bottom left curve
+      context.bezierCurveTo(
+        x - width / 2, y + (height + topCurveHeight) / 2, 
+        x, y + (height + topCurveHeight) / 2, 
+        x, y + height
+        );
+                
+      // bottom right curve
+      context.bezierCurveTo(
+        x, y + (height + topCurveHeight) / 2, 
+        x + width / 2, y + (height + topCurveHeight) / 2, 
+        x + width / 2, y + topCurveHeight
+      );
+                
+      // top right curve
+      context.bezierCurveTo(
+        x + width / 2, y, 
+        x, y, 
+        x, y + topCurveHeight
+      );
+
+      context.stroke();
+      context.fill();
+      context.closePath();
+    };
+
     const confettiElements = [];
     for (let i = 0; i < this.state.confettiNumber; i += 1) {
-      confettiElements.push(<Confetti key={i} recycle={false} />);
+      confettiElements.push(<Confetti key={i} colors={["#ff00ff", "#ff0000", "#ffb6c1", "#ffc0cb"]} drawShape={context => drawHeart(context, 0, 0, 15, 15)} recycle={false} />);
     }
 
     return (
