@@ -13,6 +13,7 @@ import CountdownDisplay from '../../components/CountdownDisplay';
 const DYLAN_IMAGE_MODE = 'dylan-pics';
 const COUPLE_IMAGE_MODE = 'couple-pics';
 const ALL_IMAGE_MODE = 'all';
+const MAX_CONFETTI = 10;
 
 class SlideshowPage extends React.Component {
   constructor(props) {
@@ -89,8 +90,6 @@ class SlideshowPage extends React.Component {
       indicators: false,
     }
 
-
-
     const drawHeart = (context, x, y, width, height) => {
       context.beginPath();
       var topCurveHeight = height * 0.3;
@@ -130,6 +129,9 @@ class SlideshowPage extends React.Component {
 
     const confettiElements = [];
     for (let i = 0; i < this.state.confettiNumber; i += 1) {
+      if (confettiElements.length >= MAX_CONFETTI) {
+        confettiElements.shift();
+      }
       confettiElements.push(<Confetti key={i} colors={["#ff00ff", "#ff0000", "#ffb6c1", "#ffc0cb"]} drawShape={context => drawHeart(context, 0, 0, 15, 15)} recycle={false} />);
     }
 
