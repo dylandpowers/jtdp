@@ -21,7 +21,8 @@ class SlideshowPage extends React.Component {
     this.state = {
       imageMode: '',
       imageUrls: [],
-      confettiNumber: 1
+      confettiNumber: 1,
+      selectedFile: null
     };
 
     this.allImages = {};
@@ -30,6 +31,7 @@ class SlideshowPage extends React.Component {
     this.fetchAllImageUrls = this.fetchAllImageUrls.bind(this);
     this.updateImageUrlsAndImageMode = this.updateImageUrlsAndImageMode.bind(this);
     this.toggleConfetti = this.toggleConfetti.bind(this);
+    this.uploadImage = this.uploadImage.bind(this);
   }
 
   componentDidMount() {
@@ -72,6 +74,10 @@ class SlideshowPage extends React.Component {
     this.setState({ confettiNumber: this.state.confettiNumber + 1 });
   };
 
+  uploadImage = (event, imageType) => {
+    this.firebase.uploadDylanImage(event.target.files[0], imageType);
+  };
+
   _shuffleArray = (array) => {
     for (let i = array.length - 1; i > 0; i--) {
       const j = Math.floor(Math.random() * (i + 1));
@@ -88,7 +94,7 @@ class SlideshowPage extends React.Component {
       infinite: true,
       indicators: false,
     }
-
+    
     const drawHeart = (context, x, y, width, height) => {
       context.beginPath();
       var topCurveHeight = height * 0.3;
@@ -128,7 +134,7 @@ class SlideshowPage extends React.Component {
 
     const confettiElements = [];
     for (let i = 0; i < this.state.confettiNumber; i += 1) {
-      confettiElements.push(<Confetti key={i} colors={["#ff00ff", "#ff0000", "#ffb6c1", "#ffc0cb"]} drawShape={context => drawHeart(context, 0, 0, 15, 15)} recycle={false} />);
+      confettiElements.push(<Confetti key={i} colors={["#ff00ff", "#ff0000", "#ffb6c1", "#f774b4"]} drawShape={context => drawHeart(context, 0, 0, 15, 15)} recycle={false} />);
     }
 
     return (
@@ -175,6 +181,26 @@ class SlideshowPage extends React.Component {
               I love you!
             </div>
           </div>
+        </div>
+        <div className={styles.filePickerContainer}>
+          <input 
+            type="file"
+            onChange={(e) => this.uploadImage(e, 'Dylan')}
+            style={{ 'display': 'none' }}
+            ref={fileInput => this.fileInput = fileInput}
+          />
+          <button className={styles.filePickerButton} onClick={() => this.fileInput.click()}>
+            Upload Dylan Image
+          </button>
+          <input
+            type="file"
+            onChange={(e) => this.uploadImage(e, 'Couple')}
+            style={{ 'display': 'none' }}
+            ref={coupleFileInput => this.coupleFileInput = coupleFileInput}
+          />
+          <button className={styles.filePickerButton} onClick={() => this.coupleFileInput.click()}>
+            Upload Couple Image
+          </button>
         </div>
       </div>
     );

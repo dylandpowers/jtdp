@@ -11,6 +11,9 @@ const firebaseConfig = {
   appId: "1:786415873557:web:defecb2e86a857bf8b281c"
 };
 
+const DYLAN_PICS_DIRNAME = 'dylan-pics/';
+const COUPLE_PICS_DIRNAME = 'couple-pics/';
+
 class Firebase {
   constructor() {
     firebase.initializeApp(firebaseConfig);
@@ -61,6 +64,13 @@ class Firebase {
       .child(childName)
       .transaction(currentNum => (currentNum || 0) + 1);
     }
+  };
+
+  uploadDylanImage = (image, imageType) => {
+    const imageDirectory = imageType === 'Dylan' ? DYLAN_PICS_DIRNAME : COUPLE_PICS_DIRNAME;
+    this.storage.ref()
+      .child(imageDirectory + image.name)
+      .put(image);
   };
 }
 
