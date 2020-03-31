@@ -22,12 +22,13 @@ class SlideshowPage extends React.Component {
       imageMode: '',
       imageUrls: [],
       confettiNumber: 1,
-      selectedFile: null
+      confettiElements: []
     };
 
     this.allImages = {};
 
     this.firebase = props.firebase;
+    
     this.fetchAllImageUrls = this.fetchAllImageUrls.bind(this);
     this.updateImageUrlsAndImageMode = this.updateImageUrlsAndImageMode.bind(this);
     this.toggleConfetti = this.toggleConfetti.bind(this);
@@ -36,6 +37,29 @@ class SlideshowPage extends React.Component {
 
   componentDidMount() {
     this.fetchAllImageUrls();
+    this.pushConfettiElement();
+  }
+
+  pushConfettiElement = () => {
+    this.setState({
+      confettiElements: [
+        ...this.state.confettiElements,
+        <Confetti 
+          key={this.state.confettiNumber}
+          colors={["#ff00ff", "#ff0000", "#ffb6c1", "#f774b4"]}
+          drawShape={context => this.drawHeart(context, 0, 0, 15, 15)} 
+          recycle={false}
+          onConfettiComplete={this.removeConfettiElement}
+        />
+      ],
+      confettiNumber: this.state.confettiNumber + 1
+    });
+  }
+
+  removeConfettiElement = () => {
+    const confettiElements = this.state.confettiElements;
+    confettiElements.shift();
+    this.setState({ confettiElements });
   }
 
   fetchAllImageUrls = (callback) => {
@@ -49,6 +73,43 @@ class SlideshowPage extends React.Component {
         console.error(res.err);
       }
     });
+  };
+
+  drawHeart = (context, x, y, width, height) => {
+    context.beginPath();
+    var topCurveHeight = height * 0.3;
+    context.moveTo(x, y + topCurveHeight);
+    // top left curve
+    context.bezierCurveTo(
+      x, y, 
+      x - width / 2, y, 
+      x - width / 2, y + topCurveHeight
+    );
+              
+    // bottom left curve
+    context.bezierCurveTo(
+      x - width / 2, y + (height + topCurveHeight) / 2, 
+      x, y + (height + topCurveHeight) / 2, 
+      x, y + height
+      );
+              
+    // bottom right curve
+    context.bezierCurveTo(
+      x, y + (height + topCurveHeight) / 2, 
+      x + width / 2, y + (height + topCurveHeight) / 2, 
+      x + width / 2, y + topCurveHeight
+    );
+              
+    // top right curve
+    context.bezierCurveTo(
+      x + width / 2, y, 
+      x, y, 
+      x, y + topCurveHeight
+    );
+
+    context.stroke();
+    context.fill();
+    context.closePath();
   };
 
   updateImageUrlsAndImageMode = (newImageMode) => {
@@ -71,7 +132,7 @@ class SlideshowPage extends React.Component {
 
   toggleConfetti = () => {
     this.firebase.incrementConfettiCount();
-    this.setState({ confettiNumber: this.state.confettiNumber + 1 });
+    this.pushConfettiElement();
   };
 
   uploadImage = (event, imageType) => {
@@ -94,52 +155,10 @@ class SlideshowPage extends React.Component {
       infinite: true,
       indicators: false,
     }
-    
-    const drawHeart = (context, x, y, width, height) => {
-      context.beginPath();
-      var topCurveHeight = height * 0.3;
-      context.moveTo(x, y + topCurveHeight);
-      // top left curve
-      context.bezierCurveTo(
-        x, y, 
-        x - width / 2, y, 
-        x - width / 2, y + topCurveHeight
-      );
-                
-      // bottom left curve
-      context.bezierCurveTo(
-        x - width / 2, y + (height + topCurveHeight) / 2, 
-        x, y + (height + topCurveHeight) / 2, 
-        x, y + height
-        );
-                
-      // bottom right curve
-      context.bezierCurveTo(
-        x, y + (height + topCurveHeight) / 2, 
-        x + width / 2, y + (height + topCurveHeight) / 2, 
-        x + width / 2, y + topCurveHeight
-      );
-                
-      // top right curve
-      context.bezierCurveTo(
-        x + width / 2, y, 
-        x, y, 
-        x, y + topCurveHeight
-      );
-
-      context.stroke();
-      context.fill();
-      context.closePath();
-    };
-
-    const confettiElements = [];
-    for (let i = 0; i < this.state.confettiNumber; i += 1) {
-      confettiElements.push(<Confetti key={i} colors={["#ff00ff", "#ff0000", "#ffb6c1", "#f774b4"]} drawShape={context => drawHeart(context, 0, 0, 15, 15)} recycle={false} />);
-    }
 
     return (
       <div className={styles.container}>
-        {confettiElements}
+        {this.state.confettiElements.map(element => element) /* idk why you have to do this */ }
         <div className={styles.buttonContainer}>
           <div 
             className={this.state.imageMode === COUPLE_IMAGE_MODE ? styles.buttonSelected : styles.button}
