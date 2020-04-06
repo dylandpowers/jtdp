@@ -6,6 +6,7 @@ import * as serviceWorker from './serviceWorker';
 
 import LoginPage from './containers/LoginPage';
 import SlideshowPage from './containers/SlideshowPage';
+import LetterPage from './containers/LetterPage';
 import ProtectedRoute from './routes/ProtectedRoute';
 
 ReactDOM.render(
@@ -14,6 +15,7 @@ ReactDOM.render(
       <Switch>
         <Route exact path="/" component={LoginPage} />
         <ProtectedRoute exact path="/iloveyou" component={SlideshowPage} />
+        <ProtectedRoute exact path="/sixmonths" component={LetterPage} />
         <Route component={LoginPage} />
       </Switch>
     </HashRouter>

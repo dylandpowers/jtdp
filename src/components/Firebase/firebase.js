@@ -32,6 +32,9 @@ class Firebase {
       .catch((err) => callback({ success: false, err: err }));
   };
 
+  /**
+   * @param {function} callback
+   */
   fetchAllImageUrls = (callback) => {
     this.storage.ref()
       .listAll()
@@ -49,6 +52,24 @@ class Firebase {
       }).catch((err) => callback({ success: false, err: err }));
   }
 
+  /**
+   * @param {string} title title of the letter
+   * @param {function} callback
+   */
+  fetchLetter = (title, callback) => {
+    firebase.database().ref()
+      .child('letters')
+      .once('value', (snapshot) => {
+        if (!snapshot.val()) {
+          callback({ success: false });
+          return;
+        }
+
+        const data = snapshot.val()[title];
+        callback({ success: true, text: data });
+      });
+  }
+
   incrementConfettiCount = () => {
     const user = this.auth.currentUser;
     if (user) {
@@ -60,12 +81,16 @@ class Firebase {
         childName = 'Dylan'
       }
       firebase.database()
-      .ref('clicks')
-      .child(childName)
-      .transaction(currentNum => (currentNum || 0) + 1);
+        .ref('clicks')
+        .child(childName)
+        .transaction(currentNum => (currentNum || 0) + 1);
     }
   };
 
+  /**
+   * @param {object} image
+   * @param {string} imageType should either be 'Dylan' or 'Couple'
+   */
   uploadDylanImage = (image, imageType) => {
     const imageDirectory = imageType === 'Dylan' ? DYLAN_PICS_DIRNAME : COUPLE_PICS_DIRNAME;
     this.storage.ref()

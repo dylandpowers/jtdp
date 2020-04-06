@@ -1,0 +1,32 @@
+.container {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  display: flex;
+  flex-direction: row;
+  background-color: #ccccff;
+  margin: auto auto;
+}
+
+.textContainer {
+  text-align: left;
+  color: #ffffff;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  margin: 10px 10px;
+  width: 50%;
+  height: 100%;
+  font-size: 24px;
+}
+
+.image {
+  width: 512px;
+  height: 512px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  margin: auto auto;
+}
