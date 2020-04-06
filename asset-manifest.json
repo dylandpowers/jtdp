@@ -1,6 +1,6 @@
 {
   "files": {
-    "main.css": "/jtdp/static/css/main.8abcdb2f.chunk.css",
+    "main.css": "/jtdp/static/css/main.fb722a4a.chunk.css",
     "main.js": "/jtdp/static/js/main.ec0ee0b1.chunk.js",
     "main.js.map": "/jtdp/static/js/main.ec0ee0b1.chunk.js.map",
     "runtime-main.js": "/jtdp/static/js/runtime-main.a7bc4d3d.js",
@@ -9,10 +9,10 @@
     "static/js/2.c006c0a9.chunk.js": "/jtdp/static/js/2.c006c0a9.chunk.js",
     "static/js/2.c006c0a9.chunk.js.map": "/jtdp/static/js/2.c006c0a9.chunk.js.map",
     "index.html": "/jtdp/index.html",
-    "precache-manifest.238946266500f44c3ab067e6e934b288.js": "/jtdp/precache-manifest.238946266500f44c3ab067e6e934b288.js",
+    "precache-manifest.cc8be16cf097ce4f673603f8eb16b8d0.js": "/jtdp/precache-manifest.cc8be16cf097ce4f673603f8eb16b8d0.js",
     "service-worker.js": "/jtdp/service-worker.js",
     "static/css/2.5ffa1744.chunk.css.map": "/jtdp/static/css/2.5ffa1744.chunk.css.map",
-    "static/css/main.8abcdb2f.chunk.css.map": "/jtdp/static/css/main.8abcdb2f.chunk.css.map",
+    "static/css/main.fb722a4a.chunk.css.map": "/jtdp/static/css/main.fb722a4a.chunk.css.map",
     "static/js/2.c006c0a9.chunk.js.LICENSE.txt": "/jtdp/static/js/2.c006c0a9.chunk.js.LICENSE.txt",
     "static/media/heart.png": "/jtdp/static/media/heart.de7e3083.png"
   },
@@ -20,7 +20,7 @@
     "static/js/runtime-main.a7bc4d3d.js",
     "static/css/2.5ffa1744.chunk.css",
     "static/js/2.c006c0a9.chunk.js",
-    "static/css/main.8abcdb2f.chunk.css",
+    "static/css/main.fb722a4a.chunk.css",
     "static/js/main.ec0ee0b1.chunk.js"
   ]
 }
