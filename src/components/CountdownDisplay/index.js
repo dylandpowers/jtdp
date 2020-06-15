@@ -11,7 +11,6 @@ class CountdownDisplay extends React.Component {
   }
 
   render() {
-
     const renderer = (props) => {
       if (props.completed) {
         return <div className={styles.text}>We're together!</div>;
@@ -23,10 +22,10 @@ class CountdownDisplay extends React.Component {
     return (
       <div className={styles.container}>
         <u className={styles.smallText}>
-          Countdown to 6 month anniversary
+          Countdown to 9 month anniversary
         </u>
         <Countdown
-          date="2020-04-06T05:00:00+00:00"
+          date="2020-07-06T05:00:00+00:00"
           renderer={renderer}
         >
         </Countdown>
