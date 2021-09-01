@@ -3,11 +3,13 @@ import ReactDOM from 'react-dom';
 import { HashRouter, Switch, Route } from 'react-router-dom';
 import Firebase, { FirebaseContext } from './components/Firebase/firebase';
 import * as serviceWorker from './serviceWorker';
+import './index.css';
 
 import LoginPage from './containers/LoginPage';
 import SlideshowPage from './containers/SlideshowPage';
 import LetterPage from './containers/LetterPage';
 import ProtectedRoute from './routes/ProtectedRoute';
+import MoviesPage from './movies/components/MoviesPage';
 
 ReactDOM.render(
   <FirebaseContext.Provider value={new Firebase()}>
@@ -16,6 +18,7 @@ ReactDOM.render(
         <Route exact path="/" component={LoginPage} />
         <ProtectedRoute exact path="/iloveyou" component={SlideshowPage} />
         <ProtectedRoute exact path="/sixmonths" component={LetterPage} />
+        <ProtectedRoute exact path="/movies" component={MoviesPage} />
         <Route component={LoginPage} />
       </Switch>
     </HashRouter>

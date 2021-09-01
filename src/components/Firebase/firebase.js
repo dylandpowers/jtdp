@@ -1,5 +1,6 @@
 import React from 'react';
 import firebase from 'firebase';
+import _ from 'lodash';
 
 const firebaseConfig = {
   apiKey: process.env.REACT_APP_FIREBASE_API_KEY,
@@ -19,6 +20,7 @@ class Firebase {
     firebase.initializeApp(firebaseConfig);
     this.auth = firebase.auth();
     this.storage = firebase.storage();
+    this.firestore = firebase.firestore();
   }
 
   /**
@@ -97,9 +99,61 @@ class Firebase {
       .child(imageDirectory + image.name)
       .put(image);
   };
+
+  getMoviesToWatch = (onSuccess, onError) => {
+    this.firestore.collection('movies_to_watch').get().then((qs) => {
+      const movies = [];
+      qs.forEach((doc) => movies.push(doc.data()));
+      onSuccess(movies);
+    })
+    .catch((err) => onError(err));
+  };
+
+  saveMovie = (movie, isWatched = false) => {
+    const movieToSave = _.cloneDeep(movie);
+    movieToSave.isWatched = isWatched;
+
+    this.firestore.collection('movies').doc(`${movie.id}`).set(movieToSave)
+      .catch((err) => console.error(err));
+  }
+
+  registerMovieSnapshotListener = (fn) => {
+    return this.firestore.collection('movies').onSnapshot((snapshot) => {
+      fn(snapshot.docs.map((d) => ({
+        id: d.id,
+        ...(d.data())
+      })));
+    });
+  }
+
+  rateMovie = (movie, rating, onSuccess) => {
+    const ratingKey = this.auth.currentUser.email.startsWith('j') ? 'jasmineRating' : 'dylanRating';
+    this.firestore.collection('movies').doc(`${movie.id}`).update({ 
+      [ratingKey]: rating,
+      isWatched: true,
+    })
+    .then(onSuccess)
+    .catch((err) => console.error(err));
+  }
+
+  getMovieRefWithId = (id) => {
+    return this.firestore.collection('movies').doc(`${id}`);
+  }
+
+  newBatch = () => {
+    return this.firestore.batch();
+  }
+
+  getCurrentUserFirstName = () => {
+    if (!this.auth.currentUser) {
+      return '';
+    }
+    
+    return this.auth.currentUser.email.startsWith('j') ? 'Jasmine' : 'Dylan';
+  }
 }
 
-const FirebaseContext = React.createContext(null);
+export const FirebaseContext = React.createContext(null);
 
 export default Firebase;
 
@@ -108,5 +162,3 @@ export const withFirebase = Component => props => (
     {firebase => <Component {...props} firebase={firebase} />}
   </FirebaseContext.Consumer>
 );
-
-export { FirebaseContext };
